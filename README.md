@@ -137,6 +137,12 @@ yum install python3-devel -y
 
 ```
 
+**These lines in bundle.sh creates venv. Be careful**
+    # Step 1: Create clean environment
+    rm -rf bundle
+    python3 -m venv bundle/venv
+    source bundle/venv/bin/activate
+
 #### To use
 
 ```
