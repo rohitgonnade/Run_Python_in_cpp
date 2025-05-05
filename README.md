@@ -124,6 +124,41 @@ pip install cython
 yum install python3-devel -y
 ```
 
+#### 🔄 Project Structure (Minimal + Clean)
+
+```
+
+    project/
+    ├── pycode/
+    │   ├── your_module.pyx         # Your Python/Cython interface
+    │   ├── setup.py                # Builds your `.so`
+    │   └── requirements.txt        # sentence-transformers, etc.
+    ├── bundle.sh                   # 🔧 Creates deployable bundle
+
+```
+
+#### To use
+
+```
+  cd project
+  bash bundle.sh
+  cd bundle
+  ./run.sh
+```
+
+✅ You now have a portable production-ready bundle:
+
+      No .py source code
+  
+      No need to install Python or packages
+  
+      Just copy **bundle** directory and run
+    
+
+
+### Below information gives you how to do manually 
+
+
 ### Steps to Compile Python Script into .so (Shared Object) and Use in C++:
 
 In **python_scripts** dirctory there are 2 script
