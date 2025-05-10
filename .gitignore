@@ -1,3 +1,5 @@
 /python_scripts/build
 *.c
 runme
+/bundle
+/python_scripts/so_files
