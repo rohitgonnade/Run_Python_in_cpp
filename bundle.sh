@@ -7,17 +7,17 @@ python3 -m venv bundle/venv
 source bundle/venv/bin/activate
 
 # Install deps and build .so
-cd pycode
+cd python_scripts
 pip install -r requirements.txt
-python setup.py build_ext --inplace
+python setup.py build_ext 
 
 # Bundle build output
 cd ..
 mkdir -p bundle/lib
-cp pycode/multiply*.so bundle/lib/
+cp python_scripts/so_files/*.so bundle/lib/
 
 # Optional cleanup
-rm -rf bundle/venv/share bundle/venv/include
+#rm -rf bundle/venv/share bundle/venv/include
 
 # Step 6: Create run script
 cat << 'EOF' > bundle/run.sh
