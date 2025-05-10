@@ -206,3 +206,13 @@ Ensure the .so file is in the same folder as the C++ program or adjust the Pytho
 ```
 Result: 42
 ```
+
+
+## How to use
+
+1. Run bundle.sh using
+```
+bash bundle.sh
+```
+2. This will create a directory called **bundle**. This directory contains **lib** directory with .so file(s) and a **venv** python virtual environemt will all dependecies.
+3. Copy this **bundle** directory to the directory where you want to use this
