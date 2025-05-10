@@ -18,7 +18,6 @@ for src in source_files:
     ext = Extension(
         name=module_name,
         sources=[src],
-        include_dirs=[numpy.get_include()],
     )
     extensions.append(ext)
 
