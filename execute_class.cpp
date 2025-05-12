@@ -1,11 +1,11 @@
 #include <Python.h>
 #include <iostream>
 
-long performOperation( PyObject* pInstance , std::string operation)
+double performOperation( PyObject* pInstance , std::string operation, int a , int b)
 {
-    PyObject* pResult = PyObject_CallMethod(pInstance, operation.c_str(), nullptr);
+    PyObject* pResult = PyObject_CallMethod(pInstance, operation.c_str(),  "(ll)", a, b);
     if (pResult != nullptr) {
-        long result = PyLong_AsLong(pResult);
+        double result = PyFloat_AsDouble(pResult);
         Py_DECREF(pResult);
         return result;
     } else {
@@ -33,37 +33,43 @@ int main() {
     PyObject* pModule = PyImport_Import(pName);
     Py_DECREF(pName);
 
-    if (pModule != nullptr) {
-        // Get the class from the module
-        PyObject* pClass = PyObject_GetAttrString(pModule, "SimpleMath");
-        if (pClass && PyCallable_Check(pClass)) {
-            // Create an instance of the class with arguments
-            PyObject* pArgs = PyTuple_Pack(2, PyLong_FromLong(6), PyLong_FromLong(3));
-            PyObject* pInstance = PyObject_CallObject(pClass, pArgs);
-            Py_DECREF(pArgs);
 
-            if (pInstance != nullptr) {
-                // Call multiply method
-                long result = performOperation(pInstance, "multiply");
-                std::cout << "Result of multiply: " << result << std::endl;
-
-                result = performOperation(pInstance, "divide");
-                std::cout << "Result of divide: " << result << std::endl;
-
-                Py_DECREF(pInstance);
-            } else {
-                PyErr_Print();
-            }
-
-            Py_DECREF(pClass);
-        } else {
-            PyErr_Print();
-        }
-
-        Py_DECREF(pModule);
-    } else {
+    if (pModule == nullptr) {
+        
         PyErr_Print();
+        return -1;
     }
+
+    // Get the class from the module
+    PyObject* pClass = PyObject_GetAttrString(pModule, "SimpleMath");
+    if (!pClass || ! PyCallable_Check(pClass)) {        
+        PyErr_Print();
+        return -1;
+    }
+
+    // Create an instance of the class with arguments
+    //PyObject* pArgs = PyTuple_Pack(2, PyLong_FromLong(6), PyLong_FromLong(3));
+    PyObject* pInstance = PyObject_CallObject(pClass, nullptr);
+    //Py_DECREF(pArgs);
+
+    if (pInstance == nullptr) {        
+        PyErr_Print();
+        return -1;
+    }
+    
+    // Call multiply method
+    double result = performOperation(pInstance, "multiply", 4, 2);
+    std::cout << "Result of multiply: " << result << std::endl;
+
+    result = performOperation(pInstance, "divide", 8, 10);
+    std::cout << "Result of divide: " << result << std::endl;
+
+    Py_DECREF(pInstance);
+
+    Py_DECREF(pClass);
+
+    Py_DECREF(pModule);
+
 
     Py_Finalize();
     return 0;
